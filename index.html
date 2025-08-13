@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yogesh R - Cybersecurity Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter and Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0d1117;
+            --bg-light: #161b22;
+            --border-color: #30363d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent-green: #238636;
+            --accent-glow: #39d353;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+        }
+        
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        h1, h2, h3, .font-firacode {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-green);
+        }
+
+        /* Selection highlight */
+        ::selection {
+            background-color: var(--accent-green);
+            color: var(--bg-dark);
+        }
+
+        /* Glassmorphism Header */
+        .header-glass {
+            background-color: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Card styles */
+        .content-card {
+            background-color: rgba(22, 27, 34, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .content-card:hover {
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 20px rgba(57, 211, 83, 0.3);
+        }
+        
+        /* Button styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: var(--accent-green);
+            color: white;
+            box-shadow: 0 0 10px rgba(57, 211, 83, 0.4);
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(57, 211, 83, 0.6);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--accent-glow);
+            border: 1px solid var(--accent-green);
+        }
+        .btn-secondary:hover {
+            background-color: rgba(57, 211, 83, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Keyframe animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        /* Navigation active state */
+        .nav-link.active {
+            color: var(--accent-glow);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <canvas id="matrix-bg"></canvas>
+    <!-- Header -->
+    <header class="header-glass py-4 px-6 md:px-12 sticky top-0 z-50">
+        <nav class="container mx-auto flex justify-between items-center flex-wrap">
+            <a href="#home" class="nav-link text-xl sm:text-2xl font-bold text-white hover:text-green-400 transition-colors duration-300 font-firacode">&lt;Yogesh R /&gt;</a>
+            <div class="block lg:hidden">
+                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-green-300 border-green-400 hover:text-white hover:border-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden" id="nav-content">
+                <ul class="text-base lg:flex-grow lg:flex lg:justify-end">
+                    <li><a href="#home" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 mr-6 transition-colors duration-300">Home</a></li>
+                    <li><a href="#about" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 mr-6 transition-colors duration-300">About</a></li>
+                    <li><a href="#skills" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 mr-6 transition-colors duration-300">Skills</a></li>
+                    <li><a href="#internships" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 mr-6 transition-colors duration-300">Internships</a></li>
+                    <li><a href="#projects" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 mr-6 transition-colors duration-300">Projects</a></li>
+                    <li><a href="#certifications" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 mr-6 transition-colors duration-300">Certs</a></li>
+                    <li><a href="#contact" class="nav-link block mt-4 lg:inline-block lg:mt-0 text-gray-300 hover:text-green-400 transition-colors duration-300">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="relative z-10">
+        <!-- Page Content: Home -->
+        <section id="home" class="page-content relative text-white py-20 sm:py-24 md:py-32 flex items-center justify-center min-h-screen">
+            <div class="container mx-auto text-center px-6 md:px-12 fade-in">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">Hi, I'm <span class="text-green-400">Yogeshs</span>!</h1>
+                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-400">A Cybersecurity student passionate about building secure, user-centric software and creating reliable, efficient applications.</p>
+                <div class="flex justify-center items-center space-x-4 flex-wrap gap-4">
+                    <a href="https://github.com/yogesh35" target="_blank" class="btn btn-primary w-full sm:w-auto"><i class="fab fa-github mr-2"></i>GitHub</a>
+                    <a href="https://linkedin.com/in/yogesh-ramamoorthy" target="_blank" class="btn btn-secondary w-full sm:w-auto"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a>
+                    <a href="https://tryhackme.com/p/yogeshr" target="_blank" class="btn btn-secondary w-full sm:w-auto"><i class="fas fa-terminal mr-2"></i>TryHackMe</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Content: About -->
+        <section id="about" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="content-card p-8 md:p-12 text-center fade-in">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-6">About Me</h2>
+                    <div class="max-w-4xl mx-auto">
+                        <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-4">
+                            Aspiring Computer Science and Engineering student with a specialization in Cybersecurity, passionate about building secure and user-centric software solutions. Seeking opportunities to apply academic knowledge and technical skills in real-world software development environments.
+                        </p>
+                        <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-8">
+                           Experienced in programming languages like Python and Java, with hands-on exposure to cybersecurity tools and techniques. Dedicated to continuous learning and innovation to create reliable, efficient, and secure applications that meet modern digital challenges. Currently pursuing a B.E. in Computer Science Engineering with a Specialization in Cybersecurity at Arunai Engineering College (graduating May 2026), holding a CGPA of 8.48.
+                        </p>
+                        <a href="https://drive.google.com/file/d/1tq739x3WOeIB_z3PVMDqg74GuQzWwY_t/view?usp=sharing" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-file-lines mr-2"></i>View Resume
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Content: Skills -->
+        <section id="skills" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Technical Arsenal</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="content-card p-6 fade-in" style="animation-delay: 0.1s;">
+                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-3"><i class="fas fa-code mr-2 text-green-400"></i>Languages</h3>
+                        <ul class="list-none text-gray-400 space-y-2">
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>C</li>
+                            <li>Bash</li>
+                        </ul>
+                    </div>
+                    <div class="content-card p-6 fade-in" style="animation-delay: 0.2s;">
+                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-3"><i class="fas fa-shield-halved mr-2 text-green-400"></i>Tools</h3>
+                        <ul class="list-none text-gray-400 space-y-2">
+                            <li>Wireshark</li>
+                            <li>Nmap</li>
+                            <li>Metasploit</li>
+                            <li>Hydra</li>
+                            <li>John the Ripper</li>
+                            <li>Burp Suite</li>
+                            <li>Git</li>
+                        </ul>
+                    </div>
+                    <div class="content-card p-6 fade-in" style="animation-delay: 0.3s;">
+                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-3"><i class="fas fa-terminal mr-2 text-green-400"></i>Platforms</h3>
+                        <ul class="list-none text-gray-400 space-y-2">
+                            <li>Linux (Kali)</li>
+                            <li>Windows</li>
+                            <li>VS Code</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Content: Internships -->
+        <section id="internships" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Field Experience</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                    <div class="content-card p-6 text-left fade-in" style="animation-delay: 0.1s;">
+                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Digital Forensics Intern</h3>
+                        <p class="text-lg font-medium text-green-400 mb-3">Alibi Technologies (1 Month)</p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 text-base">
+                            <li>Investigated disk and mobile data using Autopsy, Volatility, Magnet AXIOM, and Cellebrite.</li>
+                            <li>Extracted and analyzed forensic artifacts for case evaluation.</li>
+                        </ul>
+                    </div>
+                    <div class="content-card p-6 text-left fade-in" style="animation-delay: 0.2s;">
+                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-2">Cybersecurity Intern</h3>
+                         <p class="text-lg font-medium text-green-400 mb-3">Codec Technologies (1 Month)</p>
+                        <ul class="list-disc list-inside text-gray-300 space-y-2 text-base">
+                            <li>Learned core cybersecurity concepts including threat modeling and risk analysis.</li>
+                            <li>Conducted penetration testing and traffic analysis using Wireshark and Nmap.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Content: Projects -->
+        <section id="projects" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+            <div class="container mx-auto px-6 md:px-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in text-center">My Projects</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                    <!-- Project Card 1 -->
+                    <div class="content-card p-6 sm:p-8 text-left flex flex-col fade-in" style="animation-delay: 0.1s;">
+                        <h3 class="text-2xl font-bold text-white mb-2">Spam Email Detector</h3>
+                        <p class="text-gray-400 mb-4 flex-grow">A machine learning model that classifies emails as spam or not spam with high accuracy using Natural Language Processing techniques.</p>
+                        <div class="mb-4">
+                            <span class="inline-block bg-gray-700 text-gray-300 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">Python</span>
+                            <span class="inline-block bg-gray-700 text-gray-300 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">Scikit-learn</span>
+                            <span class="inline-block bg-gray-700 text-gray-300 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">NLP</span>
+                        </div>
+                        <div class="mt-auto flex items-center space-x-4">
+                            <a href="https://github.com/yogesh35/spam-email-detector.git" target="_blank" class="btn btn-secondary"><i class="fab fa-github mr-2"></i>Code</a>
+                        </div>
+                    </div>
+                     <!-- Coming Soon Card -->
+                     <div class="content-card p-8 flex items-center justify-center fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-center">
+                            <i class="fas fa-user-secret text-4xl text-green-400 mb-4"></i>
+                            <h3 class="text-xl md:text-2xl font-bold text-white">Top Secret Projects</h3>
+                            <p class="text-gray-400 mt-2">More work under development. Stay tuned.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Page Content: Certifications -->
+        <section id="certifications" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Validations</h2>
+                <div class="max-w-3xl mx-auto content-card p-8 fade-in">
+                    <ul class="list-none text-gray-300 text-left space-y-4 text-base md:text-lg">
+                        <li class="flex items-start"><i class="fas fa-award text-green-400 mr-4 mt-1"></i><span>Google Cybersecurity Professional Certificate</span></li>
+                        <li class="flex items-start"><i class="fas fa-award text-green-400 mr-4 mt-1"></i><span>Google Advanced Data Analytics Certificate</span></li>
+                        <li class="flex items-start"><i class="fas fa-award text-green-400 mr-4 mt-1"></i><span>Google Data Analytics Professional Certificate</span></li>
+                        <li class="flex items-start"><i class="fas fa-award text-green-400 mr-4 mt-1"></i><span>Python Essentials 1 & 2 (Cisco)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Content: Contact -->
+        <section id="contact" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+            <div class="container mx-auto px-6 md:px-12 text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-8 fade-in">Establish Comms</h2>
+                <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto fade-in">
+                    I'm always open to new opportunities and collaborations. Feel free to reach out.
+                </p>
+                <div class="max-w-xl mx-auto content-card p-8 fade-in">
+                     <p class="text-gray-300 text-lg leading-loose">
+                        <i class="fas fa-envelope mr-2 text-green-400"></i><a href="mailto:yogesh200412@gmail.com" class="hover:text-green-300 hover:underline">yogesh200412@gmail.com</a> <br>
+                        <i class="fas fa-phone mr-2 text-green-400"></i><a href="tel:+916382472909" class="hover:text-green-300 hover:underline">+91 6382472909</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bg-light text-white py-8 px-6 md:px-12 mt-8 border-t border-border-color relative z-10">
+        <div class="container mx-auto text-center text-gray-400">
+            <p>&copy; 2025 Yogesh R. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://github.com/yogesh35" target="_blank" class="text-gray-400 hover:text-green-400 transition-colors duration-300"><i class="fab fa-github fa-2x"></i></a>
+                <a href="https://linkedin.com/in/yogesh-ramamoorthy" target="_blank" class="text-gray-400 hover:text-green-400 transition-colors duration-300"><i class="fab fa-linkedin fa-2x"></i></a>
+                <a href="https://tryhackme.com/p/yogeshr" target="_blank" class="text-gray-400 hover:text-green-400 transition-colors duration-300"><i class="fas fa-terminal fa-2x"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for page navigation and matrix background -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-content');
+            const navContent = document.getElementById('nav-content');
+            const navToggle = document.getElementById('nav-toggle');
+
+            // --- Page Navigation Logic ---
+            function showPage(targetId) {
+                // Hide all pages
+                pages.forEach(page => {
+                    page.classList.add('hidden');
+                });
+
+                // Show the target page
+                const targetPage = document.querySelector(targetId);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                }
+                
+                // Update active link style
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === targetId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    // Navigate to the page
+                    showPage(targetId);
+
+                    // Hide mobile nav menu after click
+                    if (!navContent.classList.contains('hidden') && window.innerWidth < 1024) {
+                        navContent.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Show the home page by default and set active link
+            showPage('#home');
+
+            // --- Mobile Navigation Toggle ---
+            navToggle.addEventListener('click', function() {
+                navContent.classList.toggle('hidden');
+            });
+
+            // --- Matrix Background ---
+            const canvas = document.getElementById('matrix-bg');
+            const ctx = canvas.getContext('2d');
+            let animationFrameId;
+
+            const setupCanvas = () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            };
+
+            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const nums = '0123456789';
+            const alphabet = katakana + latin + nums;
+            const fontSize = 16;
+            let columns = canvas.width / fontSize;
+            let rainDrops = [];
+
+            const resetRainDrops = () => {
+                columns = canvas.width / fontSize;
+                rainDrops = [];
+                for (let x = 0; x < columns; x++) {
+                    rainDrops[x] = 1;
+                }
+            }
+            
+            const draw = () => {
+                ctx.fillStyle = 'rgba(13, 17, 23, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#238636';
+                ctx.font = fontSize + 'px monospace';
+
+                for (let i = 0; i < rainDrops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+                    if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        rainDrops[i] = 0;
+                    }
+                    rainDrops[i]++;
+                }
+                animationFrameId = requestAnimationFrame(draw);
+            };
+            
+            const startAnimation = () => {
+                setupCanvas();
+                resetRainDrops();
+                if(animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                }
+                draw();
+            }
+
+            startAnimation();
+            window.addEventListener('resize', startAnimation);
+        });
+    </script>
+</body>
+</html>
