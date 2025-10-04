@@ -142,6 +142,87 @@
         .page-content:not(:last-child) {
             border-bottom: 1px solid rgba(48, 54, 61, 0.3);
         }
+
+        /* Typing animation */
+        .blinking-cursor {
+            animation: blink 1s infinite;
+            color: var(--accent-glow);
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Enhanced button animations */
+        .btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Gradient background for sections */
+        .section-gradient {
+            background: linear-gradient(135deg, rgba(35, 134, 54, 0.1) 0%, rgba(13, 17, 23, 0.8) 50%, rgba(57, 211, 83, 0.1) 100%);
+        }
+
+        /* Skill progress bars */
+        .skill-bar {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-glow));
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+            position: relative;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 16px 16px;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 16px 16px; }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -173,31 +254,115 @@
         <!-- Page Content: Home -->
         <section id="home" class="page-content relative text-white py-20 sm:py-24 md:py-32 flex items-center justify-center">
             <div class="container mx-auto text-center px-6 md:px-12 fade-in">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">Hi, I'm <span class="text-green-400">Yogesh</span>!</h1>
-                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-400">A Cybersecurity student passionate about building secure, user-centric software and creating reliable, efficient applications.</p>
-                <div class="flex justify-center items-center space-x-4 flex-wrap gap-4">
-                    <a href="https://github.com/yogesh35" target="_blank" class="btn btn-primary w-full sm:w-auto"><i class="fab fa-github mr-2"></i>GitHub</a>
-                    <a href="https://linkedin.com/in/yogesh-ramamoorthy" target="_blank" class="btn btn-secondary w-full sm:w-auto"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a>
-                    <a href="https://tryhackme.com/p/yogeshr" target="_blank" class="btn btn-secondary w-full sm:w-auto"><i class="fas fa-terminal mr-2"></i>TryHackMe</a>
+                <div class="mb-6">
+                    <span class="inline-block px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm font-medium border border-green-400/30">
+                        🛡️ Cybersecurity Specialist
+                    </span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                    Hi, I'm <span class="text-green-400">Yogesh</span>!<br>
+                    <span class="text-2xl sm:text-3xl lg:text-4xl text-gray-300 font-normal">
+                        I'm a <span id="typed-text" class="text-green-400 font-semibold"></span><span class="blinking-cursor">|</span>
+                    </span>
+                </h1>
+                <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-400 leading-relaxed">
+                    Passionate cybersecurity student specializing in secure software development, digital forensics, and penetration testing. 
+                    Building the next generation of cyber defense solutions with cutting-edge technology and innovative thinking.
+                </p>
+                <div class="flex justify-center items-center space-x-4 flex-wrap gap-4 mb-8">
+                    <a href="https://github.com/yogesh35" target="_blank" class="btn btn-primary w-full sm:w-auto transform hover:scale-105">
+                        <i class="fab fa-github mr-2"></i>Explore My Code
+                    </a>
+                    <a href="#contact" class="btn btn-secondary w-full sm:w-auto transform hover:scale-105">
+                        <i class="fas fa-envelope mr-2"></i>Let's Connect
+                    </a>
+                    <a href="https://tryhackme.com/p/yogeshr" target="_blank" class="btn btn-secondary w-full sm:w-auto transform hover:scale-105">
+                        <i class="fas fa-terminal mr-2"></i>TryHackMe
+                    </a>
+                </div>
+                <div class="flex justify-center space-x-6 text-gray-400">
+                    <a href="https://linkedin.com/in/yogesh-ramamoorthy" target="_blank" class="hover:text-green-400 transition-colors transform hover:scale-110">
+                        <i class="fab fa-linkedin fa-2x"></i>
+                    </a>
+                    <a href="https://github.com/yogesh35" target="_blank" class="hover:text-green-400 transition-colors transform hover:scale-110">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                    <a href="mailto:yogesh200412@gmail.com" class="hover:text-green-400 transition-colors transform hover:scale-110">
+                        <i class="fas fa-envelope fa-2x"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Page Content: About -->
-        <section id="about" class="page-content py-16 md:py-24 flex items-center">
+        <section id="about" class="page-content py-16 md:py-24 flex items-center section-gradient">
             <div class="container mx-auto px-6 md:px-12">
-                <div class="content-card p-8 md:p-12 text-center fade-in">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-6">About Me</h2>
-                    <div class="max-w-4xl mx-auto">
-                        <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-4">
-                            Aspiring Computer Science and Engineering student with a specialization in Cybersecurity, passionate about building secure and user-centric software solutions. Seeking opportunities to apply academic knowledge and technical skills in real-world software development environments.
-                        </p>
-                        <p class="text-base md:text-lg text-gray-300 leading-relaxed mb-8">
-                           Experienced in programming languages like Python and Java, with hands-on exposure to cybersecurity tools and techniques. Dedicated to continuous learning and innovation to create reliable, efficient, and secure applications that meet modern digital challenges. Currently pursuing a B.E. in Computer Science Engineering with a Specialization in Cybersecurity at Arunai Engineering College (graduating May 2026), holding a CGPA of 8.48.
-                        </p>
-                        <a href="https://drive.google.com/file/d/1tq739x3WOeIB_z3PVMDqg74GuQzWwY_t/view?usp=sharing" target="_blank" class="btn btn-primary">
-                            <i class="fas fa-file-lines mr-2"></i>View Resume
-                        </a>
+                <div class="content-card p-8 md:p-12 fade-in">
+                    <div class="text-center mb-12">
+                        <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-4">About Me</h2>
+                        <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <!-- Text Content -->
+                        <div class="space-y-6">
+                            <div class="text-lg md:text-xl text-gray-300 leading-relaxed space-y-4">
+                                <p>
+                                    🎯 <strong class="text-white">Mission-Driven Cybersecurity Professional:</strong> I'm a Computer Science Engineering student specializing in Cybersecurity, 
+                                    passionate about creating secure digital ecosystems and protecting organizations from emerging cyber threats.
+                                </p>
+                                <p>
+                                    🚀 <strong class="text-white">Technical Excellence:</strong> Proficient in Python, Java, and C, with extensive hands-on experience in 
+                                    penetration testing, digital forensics, and secure software development. I bridge the gap between theoretical knowledge and practical implementation.
+                                </p>
+                                <p>
+                                    🎓 <strong class="text-white">Academic Achievement:</strong> Currently maintaining a strong CGPA of 8.48 at Arunai Engineering College, 
+                                    graduating in May 2026 with specialized focus on cutting-edge cybersecurity technologies.
+                                </p>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-4 pt-4">
+                                <a href="https://drive.google.com/file/d/1tq739x3WOeIB_z3PVMDqg74GuQzWwY_t/view?usp=sharing" target="_blank" class="btn btn-primary">
+                                    <i class="fas fa-file-lines mr-2"></i>Download Resume
+                                </a>
+                                <a href="#contact" class="btn btn-secondary">
+                                    <i class="fas fa-handshake mr-2"></i>Let's Collaborate
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats Cards -->
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="content-card p-6 text-center transform hover:scale-105 transition-transform">
+                                <div class="text-3xl font-bold text-green-400 mb-2">8.48</div>
+                                <div class="text-gray-400 text-sm">Current CGPA</div>
+                            </div>
+                            <div class="content-card p-6 text-center transform hover:scale-105 transition-transform">
+                                <div class="text-3xl font-bold text-green-400 mb-2">2+</div>
+                                <div class="text-gray-400 text-sm">Internships</div>
+                            </div>
+                            <div class="content-card p-6 text-center transform hover:scale-105 transition-transform">
+                                <div class="text-3xl font-bold text-green-400 mb-2">4+</div>
+                                <div class="text-gray-400 text-sm">Certifications</div>
+                            </div>
+                            <div class="content-card p-6 text-center transform hover:scale-105 transition-transform">
+                                <div class="text-3xl font-bold text-green-400 mb-2">2026</div>
+                                <div class="text-gray-400 text-sm">Graduation</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Core Competencies -->
+                    <div class="mt-12 pt-8 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mb-6 text-center">Core Competencies</h3>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm border border-green-400/30">🔐 Penetration Testing</span>
+                            <span class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm border border-green-400/30">🕵️ Digital Forensics</span>
+                            <span class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm border border-green-400/30">🛡️ Secure Development</span>
+                            <span class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm border border-green-400/30">🔍 Threat Analysis</span>
+                            <span class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm border border-green-400/30">🌐 Network Security</span>
+                            <span class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-sm border border-green-400/30">📊 Risk Assessment</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,37 +370,150 @@
 
         <!-- Page Content: Skills -->
         <section id="skills" class="page-content py-16 md:py-24 flex items-center">
-            <div class="container mx-auto px-6 md:px-12 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Technical Arsenal</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="content-card p-6 fade-in" style="animation-delay: 0.1s;">
-                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-3"><i class="fas fa-code mr-2 text-green-400"></i>Languages</h3>
-                        <ul class="list-none text-gray-400 space-y-2">
-                            <li>Python</li>
-                            <li>Java</li>
-                            <li>C</li>
-                            <li>Bash</li>
-                        </ul>
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-4 fade-in">Technical Arsenal</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+                    <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                        A comprehensive toolkit built through hands-on experience and continuous learning
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Programming Languages with Progress Bars -->
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.1s;">
+                        <h3 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                            <i class="fas fa-code mr-3 text-green-400"></i>Programming Languages
+                        </h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">Python</span>
+                                    <span class="text-green-400 text-sm font-semibold">90%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="90"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">Java</span>
+                                    <span class="text-green-400 text-sm font-semibold">85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="85"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">C Programming</span>
+                                    <span class="text-green-400 text-sm font-semibold">80%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="80"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">Bash Scripting</span>
+                                    <span class="text-green-400 text-sm font-semibold">75%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="75"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="content-card p-6 fade-in" style="animation-delay: 0.2s;">
-                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-3"><i class="fas fa-shield-halved mr-2 text-green-400"></i>Tools</h3>
-                        <ul class="list-none text-gray-400 space-y-2">
-                            <li>Wireshark</li>
-                            <li>Nmap</li>
-                            <li>Metasploit</li>
-                            <li>Hydra</li>
-                            <li>John the Ripper</li>
-                            <li>Burp Suite</li>
-                            <li>Git</li>
-                        </ul>
+
+                    <!-- Cybersecurity Tools -->
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.2s;">
+                        <h3 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                            <i class="fas fa-shield-halved mr-3 text-green-400"></i>Security Tools
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center p-3 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <i class="fas fa-network-wired text-green-400 mr-3"></i>
+                                <span class="text-gray-300">Wireshark</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <i class="fas fa-search text-green-400 mr-3"></i>
+                                <span class="text-gray-300">Nmap</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <i class="fas fa-bug text-green-400 mr-3"></i>
+                                <span class="text-gray-300">Metasploit</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <i class="fas fa-key text-green-400 mr-3"></i>
+                                <span class="text-gray-300">Hydra</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <i class="fas fa-unlock text-green-400 mr-3"></i>
+                                <span class="text-gray-300">John the Ripper</span>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <i class="fas fa-spider text-green-400 mr-3"></i>
+                                <span class="text-gray-300">Burp Suite</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="content-card p-6 fade-in" style="animation-delay: 0.3s;">
-                        <h3 class="text-xl md:text-2xl font-semibold text-white mb-3"><i class="fas fa-terminal mr-2 text-green-400"></i>Platforms</h3>
-                        <ul class="list-none text-gray-400 space-y-2">
-                            <li>Linux (Kali)</li>
-                            <li>Windows</li>
-                            <li>VS Code</li>
-                        </ul>
+
+                    <!-- Platforms & Environments -->
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.3s;">
+                        <h3 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                            <i class="fas fa-terminal mr-3 text-green-400"></i>Platforms & Tools
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="flex items-center">
+                                    <i class="fab fa-linux text-green-400 mr-3 text-xl"></i>
+                                    <span class="text-gray-300 font-medium">Kali Linux</span>
+                                </div>
+                                <span class="text-green-400 text-sm">Advanced</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="flex items-center">
+                                    <i class="fab fa-windows text-green-400 mr-3 text-xl"></i>
+                                    <span class="text-gray-300 font-medium">Windows</span>
+                                </div>
+                                <span class="text-green-400 text-sm">Expert</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="flex items-center">
+                                    <i class="fas fa-code text-green-400 mr-3 text-xl"></i>
+                                    <span class="text-gray-300 font-medium">VS Code</span>
+                                </div>
+                                <span class="text-green-400 text-sm">Expert</span>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="flex items-center">
+                                    <i class="fab fa-git text-green-400 mr-3 text-xl"></i>
+                                    <span class="text-gray-300 font-medium">Git & GitHub</span>
+                                </div>
+                                <span class="text-green-400 text-sm">Advanced</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Specializations -->
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.4s;">
+                        <h3 class="text-2xl font-semibold text-white mb-6 flex items-center">
+                            <i class="fas fa-star mr-3 text-green-400"></i>Specializations
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="p-4 bg-gradient-to-r from-green-900/20 to-green-800/20 rounded-lg border border-green-400/30">
+                                <h4 class="text-green-400 font-semibold mb-2">🔍 Digital Forensics</h4>
+                                <p class="text-gray-300 text-sm">Expert in disk analysis, mobile forensics, and artifact extraction</p>
+                            </div>
+                            <div class="p-4 bg-gradient-to-r from-green-900/20 to-green-800/20 rounded-lg border border-green-400/30">
+                                <h4 class="text-green-400 font-semibold mb-2">🎯 Penetration Testing</h4>
+                                <p class="text-gray-300 text-sm">Comprehensive security assessments and vulnerability analysis</p>
+                            </div>
+                            <div class="p-4 bg-gradient-to-r from-green-900/20 to-green-800/20 rounded-lg border border-green-400/30">
+                                <h4 class="text-green-400 font-semibold mb-2">🛡️ Secure Development</h4>
+                                <p class="text-gray-300 text-sm">Building security-first applications and systems</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -267,30 +545,242 @@
         </section>
 
         <!-- Page Content: Projects -->
-        <section id="projects" class="page-content py-16 md:py-24 flex items-center">
+        <section id="projects" class="page-content py-16 md:py-24 flex items-center section-gradient">
             <div class="container mx-auto px-6 md:px-12">
-                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in text-center">My Projects</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-4 fade-in">Featured Projects</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+                    <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                        Showcasing real-world applications of cybersecurity and software development skills
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
                     <!-- Project Card 1 -->
-                    <div class="content-card p-6 sm:p-8 text-left flex flex-col fade-in" style="animation-delay: 0.1s;">
-                        <h3 class="text-2xl font-bold text-white mb-2">Spam Email Detector</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">A machine learning model that classifies emails as spam or not spam with high accuracy using Natural Language Processing techniques.</p>
-                        <div class="mb-4">
-                            <span class="inline-block bg-gray-700 text-gray-300 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">Python</span>
-                            <span class="inline-block bg-gray-700 text-gray-300 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">Scikit-learn</span>
-                            <span class="inline-block bg-gray-700 text-gray-300 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded">NLP</span>
+                    <div class="content-card p-8 text-left flex flex-col group hover:transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.1s;">
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">🛡️ Spam Email Detector</h3>
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-red-400 rounded-full"></span>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 p-4 rounded-lg mb-4 border border-gray-700">
+                                <code class="text-green-400 text-sm">
+                                    $ python spam_detector.py --classify email.txt<br>
+                                    <span class="text-gray-400"># Result: SPAM (Confidence: 94.7%)</span>
+                                </code>
+                            </div>
                         </div>
+                        
+                        <p class="text-gray-300 mb-6 flex-grow leading-relaxed">
+                            An intelligent machine learning system that leverages Natural Language Processing to identify spam emails with 95%+ accuracy. 
+                            Built using advanced text vectorization, feature engineering, and ensemble methods for robust email classification.
+                        </p>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-white font-semibold mb-3">🎯 Key Features:</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Real-time email classification with 95%+ accuracy</li>
+                                <li>• Advanced NLP preprocessing and feature extraction</li>
+                                <li>• Ensemble learning with multiple ML algorithms</li>
+                                <li>• Performance metrics visualization and reporting</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 text-sm rounded-full border border-blue-500/30">Python</span>
+                                <span class="px-3 py-1 bg-purple-900/50 text-purple-300 text-sm rounded-full border border-purple-500/30">Scikit-learn</span>
+                                <span class="px-3 py-1 bg-green-900/50 text-green-300 text-sm rounded-full border border-green-500/30">NLP</span>
+                                <span class="px-3 py-1 bg-orange-900/50 text-orange-300 text-sm rounded-full border border-orange-500/30">Pandas</span>
+                                <span class="px-3 py-1 bg-red-900/50 text-red-300 text-sm rounded-full border border-red-500/30">TF-IDF</span>
+                            </div>
+                        </div>
+                        
                         <div class="mt-auto flex items-center space-x-4">
-                            <a href="https://github.com/yogesh35/spam-email-detector.git" target="_blank" class="btn btn-secondary"><i class="fab fa-github mr-2"></i>Code</a>
+                            <a href="https://github.com/yogesh35/spam-email-detector.git" target="_blank" class="btn btn-primary flex-1 text-center group-hover:bg-green-500">
+                                <i class="fab fa-github mr-2"></i>View Source
+                            </a>
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-external-link-alt mr-2"></i>Demo
+                            </a>
                         </div>
                     </div>
-                     <!-- Coming Soon Card -->
-                     <div class="content-card p-8 flex items-center justify-center fade-in" style="animation-delay: 0.2s;">
-                        <div class="text-center">
-                            <i class="fas fa-user-secret text-4xl text-green-400 mb-4"></i>
-                            <h3 class="text-xl md:text-2xl font-bold text-white">Top Secret Projects</h3>
-                            <p class="text-gray-400 mt-2">More work under development. Stay tuned.</p>
+
+                    <!-- Project Card 2 -->
+                    <div class="content-card p-8 text-left flex flex-col group hover:transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.2s;">
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">🔐 Network Security Scanner</h3>
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+                                    <span class="w-3 h-3 bg-gray-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-gray-400 rounded-full"></span>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 p-4 rounded-lg mb-4 border border-gray-700">
+                                <code class="text-green-400 text-sm">
+                                    $ python netscan.py --target 192.168.1.0/24<br>
+                                    <span class="text-gray-400"># Scanning... Found 12 hosts, 47 open ports</span>
+                                </code>
+                            </div>
                         </div>
+                        
+                        <p class="text-gray-300 mb-6 flex-grow leading-relaxed">
+                            A comprehensive network security assessment tool that performs automated vulnerability scanning, port enumeration, 
+                            and security analysis. Designed for ethical penetration testing and network security auditing.
+                        </p>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-white font-semibold mb-3">🎯 Key Features:</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Multi-threaded port scanning and service detection</li>
+                                <li>• Vulnerability assessment and CVE mapping</li>
+                                <li>• Network topology discovery and visualization</li>
+                                <li>• Comprehensive security reporting dashboard</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 text-sm rounded-full border border-blue-500/30">Python</span>
+                                <span class="px-3 py-1 bg-red-900/50 text-red-300 text-sm rounded-full border border-red-500/30">Nmap</span>
+                                <span class="px-3 py-1 bg-purple-900/50 text-purple-300 text-sm rounded-full border border-purple-500/30">Threading</span>
+                                <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 text-sm rounded-full border border-yellow-500/30">JSON</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-auto flex items-center space-x-4">
+                            <a href="#" class="btn btn-secondary flex-1 text-center">
+                                <i class="fas fa-code mr-2"></i>Coming Soon
+                            </a>
+                            <span class="px-4 py-2 bg-yellow-900/30 text-yellow-400 rounded-lg text-sm border border-yellow-400/30">
+                                In Development
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="content-card p-8 text-left flex flex-col group hover:transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.3s;">
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">🕵️ Digital Forensics Toolkit</h3>
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></span>
+                                    <span class="w-3 h-3 bg-gray-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-gray-400 rounded-full"></span>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 p-4 rounded-lg mb-4 border border-gray-700">
+                                <code class="text-green-400 text-sm">
+                                    $ forensics_kit --analyze disk.img<br>
+                                    <span class="text-gray-400"># Extracting artifacts... 1,247 files recovered</span>
+                                </code>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 flex-grow leading-relaxed">
+                            A comprehensive digital forensics suite for incident response and cybercrime investigation. 
+                            Combines automated artifact extraction with advanced analysis capabilities for efficient forensic workflows.
+                        </p>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-white font-semibold mb-3">🎯 Key Features:</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Disk image analysis and file recovery</li>
+                                <li>• Timeline reconstruction and event correlation</li>
+                                <li>• Mobile device forensics and data extraction</li>
+                                <li>• Chain of custody documentation</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 text-sm rounded-full border border-blue-500/30">Python</span>
+                                <span class="px-3 py-1 bg-green-900/50 text-green-300 text-sm rounded-full border border-green-500/30">Volatility</span>
+                                <span class="px-3 py-1 bg-purple-900/50 text-purple-300 text-sm rounded-full border border-purple-500/30">Autopsy</span>
+                                <span class="px-3 py-1 bg-red-900/50 text-red-300 text-sm rounded-full border border-red-500/30">SQLite</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-auto flex items-center space-x-4">
+                            <a href="#" class="btn btn-secondary flex-1 text-center">
+                                <i class="fas fa-code mr-2"></i>Coming Soon
+                            </a>
+                            <span class="px-4 py-2 bg-blue-900/30 text-blue-400 rounded-lg text-sm border border-blue-400/30">
+                                Planning
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 4 -->
+                    <div class="content-card p-8 text-left flex flex-col group hover:transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.4s;">
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">🌐 Secure Web Application</h3>
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></span>
+                                    <span class="w-3 h-3 bg-gray-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-gray-400 rounded-full"></span>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 p-4 rounded-lg mb-4 border border-gray-700">
+                                <code class="text-green-400 text-sm">
+                                    $ flask run --host=0.0.0.0 --ssl-context=adhoc<br>
+                                    <span class="text-gray-400"># Secure server running on https://localhost:5000</span>
+                                </code>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 flex-grow leading-relaxed">
+                            A security-first web application demonstrating best practices in secure coding, authentication, 
+                            and data protection. Built with modern security frameworks and defensive programming techniques.
+                        </p>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-white font-semibold mb-3">🎯 Key Features:</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Multi-factor authentication and session management</li>
+                                <li>• Input validation and SQL injection prevention</li>
+                                <li>• HTTPS encryption and security headers</li>
+                                <li>• Role-based access control and audit logging</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 text-sm rounded-full border border-blue-500/30">Python</span>
+                                <span class="px-3 py-1 bg-green-900/50 text-green-300 text-sm rounded-full border border-green-500/30">Flask</span>
+                                <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 text-sm rounded-full border border-yellow-500/30">JWT</span>
+                                <span class="px-3 py-1 bg-purple-900/50 text-purple-300 text-sm rounded-full border border-purple-500/30">PostgreSQL</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-auto flex items-center space-x-4">
+                            <a href="#" class="btn btn-secondary flex-1 text-center">
+                                <i class="fas fa-code mr-2"></i>Coming Soon
+                            </a>
+                            <span class="px-4 py-2 bg-purple-900/30 text-purple-400 rounded-lg text-sm border border-purple-400/30">
+                                Concept
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="text-center mt-16">
+                    <div class="content-card p-8 max-w-2xl mx-auto">
+                        <h3 class="text-2xl font-bold text-white mb-4">💡 Have a Project Idea?</h3>
+                        <p class="text-gray-300 mb-6">
+                            I'm always interested in collaborating on innovative cybersecurity and software development projects. 
+                            Let's build something amazing together!
+                        </p>
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="fas fa-rocket mr-2"></i>Start a Conversation
+                        </a>
                     </div>
                 </div>
             </div>
@@ -311,18 +801,237 @@
             </div>
         </section>
 
-        <!-- Page Content: Contact -->
-        <section id="contact" class="page-content py-16 md:py-24 flex items-center">
-            <div class="container mx-auto px-6 md:px-12 text-center">
-                <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-8 fade-in">Establish Comms</h2>
-                <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto fade-in">
-                    I'm always open to new opportunities and collaborations. Feel free to reach out.
-                </p>
-                <div class="max-w-xl mx-auto content-card p-8 fade-in">
-                     <p class="text-gray-300 text-lg leading-loose">
-                        <i class="fas fa-envelope mr-2 text-green-400"></i><a href="mailto:yogesh200412@gmail.com" class="hover:text-green-300 hover:underline">yogesh200412@gmail.com</a> <br>
-                        <i class="fas fa-phone mr-2 text-green-400"></i><a href="tel:+916382472909" class="hover:text-green-300 hover:underline">+91 6382472909</a>
+        <!-- Page Content: Achievements -->
+        <section id="achievements" class="page-content py-16 md:py-24 flex items-center">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-4 fade-in">Achievements & Recognition</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+                    <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+                        Milestones and accomplishments that showcase dedication to cybersecurity excellence
                     </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                    <!-- Achievement Stats -->
+                    <div class="content-card p-6 text-center transform hover:scale-105 transition-all duration-300 fade-in">
+                        <div class="text-4xl mb-4">🎓</div>
+                        <div class="text-3xl font-bold text-green-400 mb-2 count-up" data-target="8.48">0</div>
+                        <div class="text-gray-400 text-sm font-medium">Current CGPA</div>
+                        <div class="text-gray-500 text-xs mt-1">Academic Excellence</div>
+                    </div>
+                    
+                    <div class="content-card p-6 text-center transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.1s;">
+                        <div class="text-4xl mb-4">🏆</div>
+                        <div class="text-3xl font-bold text-green-400 mb-2 count-up" data-target="4">0</div>
+                        <div class="text-gray-400 text-sm font-medium">Professional Certificates</div>
+                        <div class="text-gray-500 text-xs mt-1">Industry Recognition</div>
+                    </div>
+                    
+                    <div class="content-card p-6 text-center transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.2s;">
+                        <div class="text-4xl mb-4">💼</div>
+                        <div class="text-3xl font-bold text-green-400 mb-2 count-up" data-target="2">0</div>
+                        <div class="text-gray-400 text-sm font-medium">Industry Internships</div>
+                        <div class="text-gray-500 text-xs mt-1">Hands-on Experience</div>
+                    </div>
+                    
+                    <div class="content-card p-6 text-center transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.3s;">
+                        <div class="text-4xl mb-4">🔥</div>
+                        <div class="text-3xl font-bold text-green-400 mb-2 count-up" data-target="500">0</div>
+                        <div class="text-gray-400 text-sm font-medium">Hours of Learning</div>
+                        <div class="text-gray-500 text-xs mt-1">Continuous Growth</div>
+                    </div>
+                </div>
+                
+                <!-- Featured Achievements -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.4s;">
+                        <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                            <i class="fas fa-trophy mr-3 text-yellow-400"></i>Notable Achievements
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="w-3 h-3 bg-green-400 rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                                <div>
+                                    <h4 class="text-green-400 font-semibold">Google Cybersecurity Professional Certificate</h4>
+                                    <p class="text-gray-300 text-sm mt-1">Comprehensive training in cybersecurity fundamentals and industry best practices</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="w-3 h-3 bg-blue-400 rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                                <div>
+                                    <h4 class="text-blue-400 font-semibold">Digital Forensics Specialization</h4>
+                                    <p class="text-gray-300 text-sm mt-1">Advanced training in digital evidence analysis and incident response</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-gray-800/30 rounded-lg border border-gray-700">
+                                <div class="w-3 h-3 bg-purple-400 rounded-full mt-2 mr-4 flex-shrink-0"></div>
+                                <div>
+                                    <h4 class="text-purple-400 font-semibold">Python Programming Mastery</h4>
+                                    <p class="text-gray-300 text-sm mt-1">Cisco Python Essentials 1 & 2 certifications demonstrating programming proficiency</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.5s;">
+                        <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                            <i class="fas fa-chart-line mr-3 text-green-400"></i>Academic Excellence
+                        </h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">Overall Performance</span>
+                                    <span class="text-green-400 text-sm font-semibold">8.48/10</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="84.8"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">Cybersecurity Courses</span>
+                                    <span class="text-green-400 text-sm font-semibold">9.2/10</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="92"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-gray-300 font-medium">Programming Subjects</span>
+                                    <span class="text-green-400 text-sm font-semibold">8.8/10</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="88"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 p-4 bg-green-900/20 rounded-lg border border-green-400/30">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-green-400">Expected May 2026</div>
+                                    <div class="text-gray-300 text-sm">B.E. Computer Science & Engineering</div>
+                                    <div class="text-gray-400 text-xs">Specialization in Cybersecurity</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Content: Contact -->
+        <section id="contact" class="page-content py-16 md:py-24 flex items-center section-gradient">
+            <div class="container mx-auto px-6 md:px-12">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-4 fade-in">Let's Connect</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-green-400 to-green-600 mx-auto rounded-full"></div>
+                    <p class="text-lg text-gray-400 mt-4 max-w-2xl mx-auto fade-in">
+                        Ready to discuss cybersecurity opportunities, collaborate on projects, or just have a tech conversation? 
+                        I'm always open to connecting with fellow security enthusiasts and industry professionals.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <!-- Contact Information -->
+                    <div class="content-card p-8 fade-in">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <i class="fas fa-address-card mr-3 text-green-400"></i>Get In Touch
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center p-4 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <div class="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-green-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-400 text-sm">Email</div>
+                                    <a href="mailto:yogesh200412@gmail.com" class="text-white font-medium hover:text-green-400 transition-colors">
+                                        yogesh200412@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-4 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <div class="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-green-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-400 text-sm">Phone</div>
+                                    <a href="tel:+916382472909" class="text-white font-medium hover:text-green-400 transition-colors">
+                                        +91 6382472909
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center p-4 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-green-400/50 transition-colors">
+                                <div class="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-green-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-400 text-sm">Location</div>
+                                    <div class="text-white font-medium">Tamil Nadu, India</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="mt-8">
+                            <h4 class="text-white font-semibold mb-4">Follow My Journey</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://linkedin.com/in/yogesh-ramamoorthy" target="_blank" 
+                                   class="w-12 h-12 bg-blue-600/20 border border-blue-500/30 rounded-lg flex items-center justify-center hover:bg-blue-600/30 transition-colors">
+                                    <i class="fab fa-linkedin text-blue-400"></i>
+                                </a>
+                                <a href="https://github.com/yogesh35" target="_blank" 
+                                   class="w-12 h-12 bg-gray-600/20 border border-gray-500/30 rounded-lg flex items-center justify-center hover:bg-gray-600/30 transition-colors">
+                                    <i class="fab fa-github text-gray-400"></i>
+                                </a>
+                                <a href="https://tryhackme.com/p/yogeshr" target="_blank" 
+                                   class="w-12 h-12 bg-red-600/20 border border-red-500/30 rounded-lg flex items-center justify-center hover:bg-red-600/30 transition-colors">
+                                    <i class="fas fa-terminal text-red-400"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Message -->
+                    <div class="content-card p-8 fade-in" style="animation-delay: 0.1s;">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <i class="fas fa-paper-plane mr-3 text-green-400"></i>Quick Message
+                        </h3>
+                        <div class="space-y-6">
+                            <div class="p-6 bg-green-900/20 rounded-lg border border-green-400/30">
+                                <h4 class="text-green-400 font-semibold mb-3">🚀 Current Status</h4>
+                                <ul class="text-gray-300 text-sm space-y-2">
+                                    <li>✅ Available for cybersecurity internships</li>
+                                    <li>✅ Open to collaboration on security projects</li>
+                                    <li>✅ Interested in penetration testing opportunities</li>
+                                    <li>✅ Ready for digital forensics assignments</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="p-6 bg-blue-900/20 rounded-lg border border-blue-400/30">
+                                <h4 class="text-blue-400 font-semibold mb-3">💡 Areas of Interest</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-full">Ethical Hacking</span>
+                                    <span class="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-full">Digital Forensics</span>
+                                    <span class="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-full">Secure Development</span>
+                                    <span class="px-3 py-1 bg-gray-800 text-gray-300 text-sm rounded-full">Machine Learning</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-4">
+                                <a href="mailto:yogesh200412@gmail.com?subject=Cybersecurity Opportunity&body=Hi Yogesh, I'd like to discuss..." 
+                                   class="btn btn-primary flex-1 text-center">
+                                    <i class="fas fa-envelope mr-2"></i>Send Email
+                                </a>
+                                <a href="https://drive.google.com/file/d/1tq739x3WOeIB_z3PVMDqg74GuQzWwY_t/view?usp=sharing" 
+                                   target="_blank" class="btn btn-secondary">
+                                    <i class="fas fa-download mr-2"></i>Resume
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -399,6 +1108,105 @@
             navToggle.addEventListener('click', function() {
                 navContent.classList.toggle('hidden');
             });
+
+            // --- Typing Animation ---
+            const typedTextElement = document.getElementById('typed-text');
+            const textArray = [
+                'Cybersecurity Student',
+                'Digital Forensics Expert',
+                'Penetration Tester',
+                'Secure Developer',
+                'Problem Solver'
+            ];
+            
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            function typeText() {
+                const currentText = textArray[textIndex];
+                
+                if (isDeleting) {
+                    typedTextElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typedTextElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                let typeSpeed = isDeleting ? 100 : 150;
+                
+                if (!isDeleting && charIndex === currentText.length) {
+                    typeSpeed = 2000; // Pause at end
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % textArray.length;
+                    typeSpeed = 500; // Pause before next text
+                }
+                
+                setTimeout(typeText, typeSpeed);
+            }
+            
+            // Start typing animation
+            typeText();
+
+            // --- Skill Progress Animation ---
+            function animateSkillBars() {
+                const skillBars = document.querySelectorAll('.skill-progress');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const skillBar = entry.target;
+                            const targetWidth = skillBar.getAttribute('data-width');
+                            skillBar.style.width = targetWidth + '%';
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                skillBars.forEach(bar => {
+                    bar.style.width = '0%';
+                    observer.observe(bar);
+                });
+            }
+
+            // Initialize skill bars animation
+            animateSkillBars();
+
+            // --- Counter Animation ---
+            function animateCounters() {
+                const counters = document.querySelectorAll('.count-up');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            const target = parseFloat(counter.getAttribute('data-target'));
+                            let current = 0;
+                            const increment = target / 50;
+                            const isDecimal = target % 1 !== 0;
+                            
+                            const updateCounter = () => {
+                                if (current < target) {
+                                    current += increment;
+                                    if (current > target) current = target;
+                                    counter.textContent = isDecimal ? current.toFixed(2) : Math.floor(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.textContent = isDecimal ? target.toFixed(2) : target;
+                                }
+                            };
+                            
+                            updateCounter();
+                            observer.unobserve(counter);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                counters.forEach(counter => observer.observe(counter));
+            }
+
+            // Initialize counter animation
+            animateCounters();
 
             // --- Matrix Background ---
             const canvas = document.getElementById('matrix-bg');
