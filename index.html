@@ -555,9 +555,9 @@
                     </p>
                 </div>
                 
-                <div class="max-w-4xl mx-auto">
-                    <!-- Project Card 1 - Real Project -->
-                    <div class="content-card p-8 text-left group hover:transform hover:scale-105 transition-all duration-300 fade-in mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+                    <!-- Project Card 1 - Spam Email Detector -->
+                    <div class="content-card p-8 text-left group hover:transform hover:scale-105 transition-all duration-300 fade-in">
                         <div class="mb-6">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 class="text-2xl font-bold text-white">🛡️ Spam Email Detector</h3>
@@ -606,19 +606,71 @@
                         </div>
                     </div>
 
-                    <!-- More Projects Coming Soon -->
-                    <div class="content-card p-8 text-center fade-in">
-                        <div class="text-center">
-                            <i class="fas fa-code text-4xl text-green-400 mb-4"></i>
-                            <h3 class="text-xl md:text-2xl font-bold text-white mb-4">More Projects in Development</h3>
-                            <p class="text-gray-400 mb-6">
-                                Working on additional cybersecurity and software development projects. 
-                                Stay tuned for updates on digital forensics tools and security applications.
-                            </p>
-                            <a href="#contact" class="btn btn-secondary">
-                                <i class="fas fa-envelope mr-2"></i>Get Notified
+                    <!-- Project Card 2 - AI-Driven SIEM Tool -->
+                    <div class="content-card p-8 text-left group hover:transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.1s;">
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-2xl font-bold text-white">🔒 AI-Driven SIEM Tool</h3>
+                                <div class="flex space-x-2">
+                                    <span class="w-3 h-3 bg-green-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+                                    <span class="w-3 h-3 bg-red-400 rounded-full"></span>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 p-4 rounded-lg mb-4 border border-gray-700">
+                                <code class="text-green-400 text-sm">
+                                    $ python app_groq.py<br>
+                                    <span class="text-gray-400"># SIEM Dashboard running on http://localhost:5000</span>
+                                </code>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6 leading-relaxed">
+                            A comprehensive AI-powered Security Information and Event Management (SIEM) system featuring real-time 
+                            system monitoring, intelligent threat detection, and an AI security assistant powered by Groq API.
+                        </p>
+                        
+                        <div class="mb-6">
+                            <h4 class="text-white font-semibold mb-3">🎯 Key Features:</h4>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• Real-time system monitoring (CPU, Memory, Disk)</li>
+                                <li>• AI-powered security assistant with Groq integration</li>
+                                <li>• Activity logging and SQLite database storage</li>
+                                <li>• Web dashboard with responsive design</li>
+                                <li>• API testing tools and system health indicators</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-blue-900/50 text-blue-300 text-sm rounded-full border border-blue-500/30">Python</span>
+                                <span class="px-3 py-1 bg-green-900/50 text-green-300 text-sm rounded-full border border-green-500/30">Flask</span>
+                                <span class="px-3 py-1 bg-purple-900/50 text-purple-300 text-sm rounded-full border border-purple-500/30">Groq AI</span>
+                                <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 text-sm rounded-full border border-yellow-500/30">SQLite</span>
+                                <span class="px-3 py-1 bg-red-900/50 text-red-300 text-sm rounded-full border border-red-500/30">Tailwind CSS</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <a href="https://github.com/yogesh35/siem_tool" target="_blank" class="btn btn-primary group-hover:bg-green-500">
+                                <i class="fab fa-github mr-2"></i>View Source Code
                             </a>
                         </div>
+                    </div>
+                </div>
+                
+                <!-- More Projects Coming Soon -->
+                <div class="content-card p-8 text-center fade-in mt-8" style="animation-delay: 0.2s;">
+                    <div class="text-center">
+                        <i class="fas fa-code text-4xl text-green-400 mb-4"></i>
+                        <h3 class="text-xl md:text-2xl font-bold text-white mb-4">More Projects in Development</h3>
+                        <p class="text-gray-400 mb-6">
+                            Continuously working on additional cybersecurity tools and applications. 
+                            Stay tuned for updates on network security scanners and forensics utilities.
+                        </p>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-envelope mr-2"></i>Get Notified
+                        </a>
                     </div>
                 </div>
             </div>
