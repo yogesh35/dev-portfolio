@@ -29,6 +29,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-primary);
+            scroll-behavior: smooth;
         }
         
         #matrix-bg {
@@ -131,6 +132,16 @@
             color: var(--accent-glow);
             font-weight: 700;
         }
+
+        /* Scroll offset for navigation */
+        .page-content {
+            scroll-margin-top: 80px;
+        }
+
+        /* Improve spacing between sections */
+        .page-content:not(:last-child) {
+            border-bottom: 1px solid rgba(48, 54, 61, 0.3);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -160,7 +171,7 @@
 
     <main class="relative z-10">
         <!-- Page Content: Home -->
-        <section id="home" class="page-content relative text-white py-20 sm:py-24 md:py-32 flex items-center justify-center min-h-screen">
+        <section id="home" class="page-content relative text-white py-20 sm:py-24 md:py-32 flex items-center justify-center">
             <div class="container mx-auto text-center px-6 md:px-12 fade-in">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">Hi, I'm <span class="text-green-400">Yogesh</span>!</h1>
                 <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-400">A Cybersecurity student passionate about building secure, user-centric software and creating reliable, efficient applications.</p>
@@ -173,7 +184,7 @@
         </section>
 
         <!-- Page Content: About -->
-        <section id="about" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+        <section id="about" class="page-content py-16 md:py-24 flex items-center">
             <div class="container mx-auto px-6 md:px-12">
                 <div class="content-card p-8 md:p-12 text-center fade-in">
                     <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-6">About Me</h2>
@@ -193,7 +204,7 @@
         </section>
 
         <!-- Page Content: Skills -->
-        <section id="skills" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+        <section id="skills" class="page-content py-16 md:py-24 flex items-center">
             <div class="container mx-auto px-6 md:px-12 text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Technical Arsenal</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -231,7 +242,7 @@
         </section>
 
         <!-- Page Content: Internships -->
-        <section id="internships" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+        <section id="internships" class="page-content py-16 md:py-24 flex items-center">
             <div class="container mx-auto px-6 md:px-12 text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Field Experience</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
@@ -256,7 +267,7 @@
         </section>
 
         <!-- Page Content: Projects -->
-        <section id="projects" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+        <section id="projects" class="page-content py-16 md:py-24 flex items-center">
             <div class="container mx-auto px-6 md:px-12">
                 <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in text-center">My Projects</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
@@ -286,7 +297,7 @@
         </section>
         
         <!-- Page Content: Certifications -->
-        <section id="certifications" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+        <section id="certifications" class="page-content py-16 md:py-24 flex items-center">
             <div class="container mx-auto px-6 md:px-12 text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-12 fade-in">Validations</h2>
                 <div class="max-w-3xl mx-auto content-card p-8 fade-in">
@@ -301,7 +312,7 @@
         </section>
 
         <!-- Page Content: Contact -->
-        <section id="contact" class="page-content hidden py-16 md:py-24 min-h-screen flex items-center">
+        <section id="contact" class="page-content py-16 md:py-24 flex items-center">
             <div class="container mx-auto px-6 md:px-12 text-center">
                 <h2 class="text-3xl sm:text-4xl font-bold text-green-400 mb-8 fade-in">Establish Comms</h2>
                 <p class="text-lg text-gray-400 mb-8 max-w-2xl mx-auto fade-in">
@@ -337,24 +348,22 @@
             const navContent = document.getElementById('nav-content');
             const navToggle = document.getElementById('nav-toggle');
 
-            // --- Page Navigation Logic ---
-            function showPage(targetId) {
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.add('hidden');
-                });
-
-                // Show the target page
-                const targetPage = document.querySelector(targetId);
-                if (targetPage) {
-                    targetPage.classList.remove('hidden');
-                }
+            // --- Smooth Scrolling Navigation Logic ---
+            function updateActiveLink() {
+                const scrollPos = window.scrollY + 100; // Offset for header
                 
-                // Update active link style
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    if(link.getAttribute('href') === targetId) {
-                        link.classList.add('active');
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        const sectionTop = targetSection.offsetTop;
+                        const sectionBottom = sectionTop + targetSection.offsetHeight;
+                        
+                        if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+                            link.classList.add('active');
+                        }
                     }
                 });
             }
@@ -363,9 +372,15 @@
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
                     
-                    // Navigate to the page
-                    showPage(targetId);
+                    if (targetSection) {
+                        // Smooth scroll to section
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
 
                     // Hide mobile nav menu after click
                     if (!navContent.classList.contains('hidden') && window.innerWidth < 1024) {
@@ -374,8 +389,11 @@
                 });
             });
             
-            // Show the home page by default and set active link
-            showPage('#home');
+            // Update active link on scroll
+            window.addEventListener('scroll', updateActiveLink);
+            
+            // Set initial active link
+            updateActiveLink();
 
             // --- Mobile Navigation Toggle ---
             navToggle.addEventListener('click', function() {
