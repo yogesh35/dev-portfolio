@@ -122,13 +122,14 @@
                 rgba(22, 27, 34, 0.9) 100%);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             backdrop-filter: blur(20px);
             box-shadow: 
                 0 4px 16px rgba(0, 0, 0, 0.1),
                 0 1px 4px rgba(88, 166, 255, 0.1);
             position: relative;
             overflow: hidden;
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
         }
         
         .content-card::before {
@@ -137,27 +138,49 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 1px;
+            height: 2px;
             background: linear-gradient(90deg, 
                 transparent, 
                 var(--accent-blue), 
                 var(--accent-purple), 
                 transparent);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateX(-100%);
+        }
+
+        .content-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, 
+                rgba(88, 166, 255, 0.05) 0%, 
+                transparent 50%);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.8);
         }
         
         .content-card:hover {
             border-color: var(--accent-blue);
             box-shadow: 
-                0 8px 32px rgba(88, 166, 255, 0.2),
-                0 4px 16px rgba(165, 163, 255, 0.1),
+                0 20px 40px rgba(88, 166, 255, 0.15),
+                0 8px 32px rgba(165, 163, 255, 0.1),
                 inset 0 1px 0 rgba(88, 166, 255, 0.2);
-            transform: translateY(-8px) scale(1.02);
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-12px) scale(1.03);
         }
         
         .content-card:hover::before {
             opacity: 1;
+            transform: translateX(0%);
+        }
+
+        .content-card:hover::after {
+            opacity: 1;
+            transform: scale(1);
         }
         
         /* Enhanced Button styles */
@@ -233,14 +256,131 @@
                 inset 0 1px 0 rgba(165, 163, 255, 0.1);
         }
 
-        /* Keyframe animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Advanced Keyframe animations */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
         }
+
+        @keyframes fadeInLeft {
+            from { 
+                opacity: 0; 
+                transform: translateX(-50px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(50px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInDown {
+            from { 
+                opacity: 0; 
+                transform: translateY(-30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 40px rgba(88, 166, 255, 0.6);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px);
+            }
+            50% { 
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+            }
+            50% { 
+                transform: scale(1.05);
+            }
+        }
+
+        /* Animation classes */
         .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
+
+        .fade-in-left {
+            animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .fade-in-right {
+            animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .scale-in {
+            animation: scaleIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .slide-in-down {
+            animation: slideInDown 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        .glow-animation {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Staggered animation delays */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-700 { animation-delay: 0.7s; }
+        .delay-800 { animation-delay: 0.8s; }
         
         /* Enhanced Navigation styles */
         nav {
@@ -317,9 +457,10 @@
 
         /* Enhanced button animations */
         .btn {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            transform: perspective(1px) translateZ(0);
         }
 
         .btn::before {
@@ -329,12 +470,37 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.2), 
+                transparent);
+            transition: left 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
         }
 
         .btn:hover::before {
             left: 100%;
+        }
+
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:active {
+            transform: perspective(1px) translateZ(0) scale(0.95);
         }
 
         /* Gradient background for sections */
@@ -388,24 +554,104 @@
             100% { transform: translateX(100%); }
         }
 
-        /* Social icons enhancement */
+        /* Enhanced social icons */
         .social-icon {
             color: var(--text-gray);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             padding: 0.75rem;
             border-radius: 50%;
             background: rgba(88, 166, 255, 0.1);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1px) translateZ(0);
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(88, 166, 255, 0.3) 0%, transparent 70%);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
         }
 
         .social-icon:hover {
             color: var(--accent-blue);
             background: rgba(88, 166, 255, 0.2);
-            transform: translateY(-3px) scale(1.1);
+            transform: perspective(1px) translateZ(0) translateY(-5px) scale(1.15) rotate(5deg);
             box-shadow: 
-                0 8px 24px rgba(88, 166, 255, 0.3),
-                inset 0 1px 0 rgba(88, 166, 255, 0.2);
+                0 12px 32px rgba(88, 166, 255, 0.4),
+                0 4px 16px rgba(165, 163, 255, 0.2),
+                inset 0 1px 0 rgba(88, 166, 255, 0.3);
+            border-color: var(--accent-cyan);
+        }
+
+        .social-icon:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .social-icon:active {
+            transform: perspective(1px) translateZ(0) translateY(-3px) scale(1.05);
+        }
+
+        /* Enhanced page transitions */
+        .page-content {
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Hover effects for navigation */
+        .nav-link {
+            position: relative;
+            color: var(--text-gray);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transform: perspective(1px) translateZ(0);
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-blue);
+            background: rgba(88, 166, 255, 0.1);
+            transform: perspective(1px) translateZ(0) translateY(-2px) scale(1.05);
+        }
+
+        /* Smooth scrolling enhancement */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading state animations */
+        @keyframes skeleton {
+            0% { background-position: -200px 0; }
+            100% { background-position: calc(200px + 100%) 0; }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, 
+                rgba(48, 54, 61, 0.8) 25%, 
+                rgba(88, 166, 255, 0.1) 50%, 
+                rgba(48, 54, 61, 0.8) 75%);
+            background-size: 200px 100%;
+            animation: skeleton 1.5s infinite;
         }
     </style>
 </head>
@@ -570,7 +816,7 @@
                                     <span class="text-green-400 text-sm font-semibold">90%</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="90"></div>
+                                    <div class="skill-progress" data-progress="90%"></div>
                                 </div>
                             </div>
                             <div>
@@ -579,7 +825,7 @@
                                     <span class="text-green-400 text-sm font-semibold">85%</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="85"></div>
+                                    <div class="skill-progress" data-progress="85%"></div>
                                 </div>
                             </div>
                             <div>
@@ -588,7 +834,7 @@
                                     <span class="text-green-400 text-sm font-semibold">80%</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="80"></div>
+                                    <div class="skill-progress" data-progress="80%"></div>
                                 </div>
                             </div>
                             <div>
@@ -597,7 +843,7 @@
                                     <span class="text-green-400 text-sm font-semibold">85%</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="85"></div>
+                                    <div class="skill-progress" data-progress="85%"></div>
                                 </div>
                             </div>
                             <div>
@@ -606,7 +852,7 @@
                                     <span class="text-green-400 text-sm font-semibold">90%</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="90"></div>
+                                    <div class="skill-progress" data-progress="90%"></div>
                                 </div>
                             </div>
                         </div>
@@ -1104,7 +1350,7 @@
                                     <span class="text-green-400 text-sm font-semibold">8.5/10</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="85"></div>
+                                    <div class="skill-progress" data-progress="85%"></div>
                                 </div>
                             </div>
                             <div>
@@ -1113,7 +1359,7 @@
                                     <span class="text-green-400 text-sm font-semibold">9.2/10</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="92"></div>
+                                    <div class="skill-progress" data-progress="92%"></div>
                                 </div>
                             </div>
                             <div>
@@ -1122,7 +1368,7 @@
                                     <span class="text-green-400 text-sm font-semibold">8.8/10</span>
                                 </div>
                                 <div class="skill-bar">
-                                    <div class="skill-progress" data-width="88"></div>
+                                    <div class="skill-progress" data-progress="88%"></div>
                                 </div>
                             </div>
                             
@@ -1450,6 +1696,104 @@
             window.addEventListener('resize', startAnimation);
         });
     </script>
+    
+    <!-- Enhanced Animation Controller -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        
+                        // Add staggered delay based on element position
+                        setTimeout(() => {
+                            if (element.classList.contains('content-card')) {
+                                element.classList.add('scale-in');
+                            } else if (element.querySelector('.content-card')) {
+                                // For sections containing cards
+                                const cards = element.querySelectorAll('.content-card');
+                                cards.forEach((card, cardIndex) => {
+                                    setTimeout(() => {
+                                        card.classList.add('fade-in', `delay-${(cardIndex + 1) * 100}`);
+                                    }, cardIndex * 150);
+                                });
+                            } else if (element.tagName === 'H1') {
+                                element.classList.add('slide-in-down');
+                            } else if (element.tagName === 'H2') {
+                                element.classList.add('fade-in-left');
+                            } else if (element.classList.contains('skill-item') || element.closest('.skill-item')) {
+                                element.classList.add('fade-in-right', `delay-${index * 100}`);
+                            } else if (element.tagName === 'P' || element.tagName === 'LI') {
+                                element.classList.add('fade-in', `delay-${Math.min(index * 50, 500)}`);
+                            } else {
+                                element.classList.add('fade-in');
+                            }
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animatable elements
+            const animatableElements = document.querySelectorAll(`
+                h1, h2, h3, p, li, 
+                .content-card, 
+                .btn,
+                .social-icon,
+                .skill-item,
+                section[id],
+                .page-content > div
+            `);
+
+            animatableElements.forEach(element => {
+                // Set initial state for animations
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                observer.observe(element);
+            });
+
+            // Enhanced skill bar animations
+            const skillBars = document.querySelectorAll('.skill-progress');
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBar = entry.target;
+                        const targetWidth = progressBar.getAttribute('data-progress') || '90%';
+                        
+                        setTimeout(() => {
+                            progressBar.style.width = targetWidth;
+                            progressBar.classList.add('glow-animation');
+                        }, 500);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            skillBars.forEach(bar => {
+                bar.style.width = '0%';
+                skillObserver.observe(bar);
+            });
+
+            // Floating animation for special elements
+            const floatingElements = document.querySelectorAll('.btn-primary, .social-icon');
+            floatingElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('float-animation');
+                }, index * 200);
+            });
+
+            // Pulse animation for important elements
+            const pulseElements = document.querySelectorAll('h1 span, .nav-link.active');
+            pulseElements.forEach(element => {
+                element.classList.add('pulse-animation');
+            });
+        });
+    </script>
+
     <script>
         // Scroll-to-top button: show after scrolling down, hide near top
         (function() {
