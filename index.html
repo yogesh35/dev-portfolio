@@ -658,10 +658,17 @@
 
         /* Only hide non-critical elements for animation */
         .content-card:not(.visible),
-        .btn:not(.visible),
-        .social-icon:not(.visible) {
+        .btn:not(.visible):not(#home .btn),
+        .social-icon:not(.visible):not(#home .social-icon) {
             opacity: 0;
             transform: translateY(20px);
+        }
+
+        /* Ensure home section buttons are always visible */
+        #home .btn,
+        #home .social-icon {
+            opacity: 1 !important;
+            transform: none !important;
         }
 
         /* Loading state animations */
@@ -1731,6 +1738,14 @@
                 homeSection.style.opacity = '1';
                 homeSection.style.transform = 'none';
                 homeSection.classList.add('fade-in');
+                
+                // Make sure all home section buttons and social icons are visible
+                const homeButtons = homeSection.querySelectorAll('.btn, .social-icon, a[class*="fab"], a[class*="fas"]');
+                homeButtons.forEach(button => {
+                    button.style.opacity = '1';
+                    button.style.transform = 'none';
+                    button.style.visibility = 'visible';
+                });
             }
 
             // Simple Intersection Observer for progressive content reveal
