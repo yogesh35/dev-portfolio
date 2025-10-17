@@ -671,6 +671,12 @@
             transform: none !important;
         }
 
+        /* Ensure counters are always visible */
+        .count-up {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
         /* Loading state animations */
         @keyframes skeleton {
             0% { background-position: -200px 0; }
@@ -1327,7 +1333,7 @@
                     
                     <div class="content-card p-6 text-center transform hover:scale-105 transition-all duration-300 fade-in" style="animation-delay: 0.1s;">
                         <div class="text-4xl mb-4">🏆</div>
-                        <div class="text-3xl font-bold text-green-400 mb-2 count-up" data-target="7">0</div>
+                        <div class="text-3xl font-bold text-green-400 mb-2 count-up" data-target="8">0</div>
                         <div class="text-gray-400 text-sm font-medium">Professional Certificates</div>
                         <div class="text-gray-500 text-xs mt-1">Industry Recognition</div>
                     </div>
@@ -1585,22 +1591,27 @@
 
             navLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
+                    const href = this.getAttribute('href');
                     
-                    if (targetSection) {
-                        // Smooth scroll to section
-                        targetSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+                    // Only prevent default for internal links (starting with #)
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetSection = document.querySelector(href);
+                        
+                        if (targetSection) {
+                            // Smooth scroll to section
+                            targetSection.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
 
-                    // Hide mobile nav menu after click
-                    if (!navContent.classList.contains('hidden') && window.innerWidth < 1024) {
-                        navContent.classList.add('hidden');
+                        // Hide mobile nav menu after click
+                        if (!navContent.classList.contains('hidden') && window.innerWidth < 1024) {
+                            navContent.classList.add('hidden');
+                        }
                     }
+                    // External links (like Resume) will work normally without preventDefault
                 });
             });
             
@@ -1671,6 +1682,17 @@
 
             // Initialize counter animation
             animateCounters();
+
+            // Fallback: Show counter values immediately if animation fails
+            setTimeout(() => {
+                const counters = document.querySelectorAll('.count-up');
+                counters.forEach(counter => {
+                    if (counter.textContent === '0' || counter.textContent === '') {
+                        const target = counter.getAttribute('data-target');
+                        counter.textContent = target;
+                    }
+                });
+            }, 3000);
 
             // --- Matrix Background ---
             const canvas = document.getElementById('matrix-bg');
