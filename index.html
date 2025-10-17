@@ -639,6 +639,31 @@
             scroll-behavior: smooth;
         }
 
+        /* Ensure content is visible by default */
+        body {
+            opacity: 1;
+        }
+
+        /* Home section should always be visible */
+        #home {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        /* Fallback visibility for critical content */
+        .page-content {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Only hide non-critical elements for animation */
+        .content-card:not(.visible),
+        .btn:not(.visible),
+        .social-icon:not(.visible) {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
         /* Loading state animations */
         @keyframes skeleton {
             0% { background-position: -200px 0; }
@@ -1700,60 +1725,56 @@
     <!-- Enhanced Animation Controller -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Enhanced Intersection Observer for animations
+            // Ensure home section is immediately visible
+            const homeSection = document.getElementById('home');
+            if (homeSection) {
+                homeSection.style.opacity = '1';
+                homeSection.style.transform = 'none';
+                homeSection.classList.add('fade-in');
+            }
+
+            // Simple Intersection Observer for progressive content reveal
             const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0.15,
+                rootMargin: '0px 0px -20px 0px'
             };
 
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const element = entry.target;
                         
-                        // Add staggered delay based on element position
-                        setTimeout(() => {
-                            if (element.classList.contains('content-card')) {
-                                element.classList.add('scale-in');
-                            } else if (element.querySelector('.content-card')) {
-                                // For sections containing cards
-                                const cards = element.querySelectorAll('.content-card');
-                                cards.forEach((card, cardIndex) => {
-                                    setTimeout(() => {
-                                        card.classList.add('fade-in', `delay-${(cardIndex + 1) * 100}`);
-                                    }, cardIndex * 150);
-                                });
-                            } else if (element.tagName === 'H1') {
-                                element.classList.add('slide-in-down');
-                            } else if (element.tagName === 'H2') {
-                                element.classList.add('fade-in-left');
-                            } else if (element.classList.contains('skill-item') || element.closest('.skill-item')) {
-                                element.classList.add('fade-in-right', `delay-${index * 100}`);
-                            } else if (element.tagName === 'P' || element.tagName === 'LI') {
-                                element.classList.add('fade-in', `delay-${Math.min(index * 50, 500)}`);
-                            } else {
-                                element.classList.add('fade-in');
-                            }
-                        }, index * 100);
+                        // Add animation classes based on element type
+                        if (element.classList.contains('content-card')) {
+                            element.classList.add('scale-in');
+                        } else if (element.tagName === 'H2') {
+                            element.classList.add('fade-in-left');
+                        } else {
+                            element.classList.add('fade-in');
+                        }
+                        
+                        // Add staggered animation for multiple elements
+                        element.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                        
+                        observer.unobserve(element);
                     }
                 });
             }, observerOptions);
 
-            // Observe all animatable elements
+            // Only observe non-critical elements for animation
             const animatableElements = document.querySelectorAll(`
-                h1, h2, h3, p, li, 
                 .content-card, 
-                .btn,
-                .social-icon,
-                .skill-item,
-                section[id],
-                .page-content > div
+                #about, #skills, #experience, #projects, #certifications, #contact
             `);
 
             animatableElements.forEach(element => {
-                // Set initial state for animations
-                element.style.opacity = '0';
-                element.style.transform = 'translateY(20px)';
+                // Only hide non-home sections initially
+                if (element.id !== 'home') {
+                    element.style.opacity = '0.3';
+                    element.style.transform = 'translateY(10px)';
+                }
                 observer.observe(element);
             });
 
@@ -1768,28 +1789,14 @@
                         setTimeout(() => {
                             progressBar.style.width = targetWidth;
                             progressBar.classList.add('glow-animation');
-                        }, 500);
+                        }, 300);
                     }
                 });
-            }, { threshold: 0.5 });
+            }, { threshold: 0.3 });
 
             skillBars.forEach(bar => {
                 bar.style.width = '0%';
                 skillObserver.observe(bar);
-            });
-
-            // Floating animation for special elements
-            const floatingElements = document.querySelectorAll('.btn-primary, .social-icon');
-            floatingElements.forEach((element, index) => {
-                setTimeout(() => {
-                    element.classList.add('float-animation');
-                }, index * 200);
-            });
-
-            // Pulse animation for important elements
-            const pulseElements = document.querySelectorAll('h1 span, .nav-link.active');
-            pulseElements.forEach(element => {
-                element.classList.add('pulse-animation');
             });
         });
     </script>
