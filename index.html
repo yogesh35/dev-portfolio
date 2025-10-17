@@ -671,10 +671,19 @@
             transform: none !important;
         }
 
-        /* Ensure counters are always visible */
+        /* Ensure counters are always visible and functional */
         .count-up {
             opacity: 1 !important;
             visibility: visible !important;
+            display: inline-block !important;
+            color: #56d364 !important;
+            font-weight: bold !important;
+        }
+
+        /* Ensure counter containers are visible */
+        .content-card .count-up {
+            position: relative;
+            z-index: 10;
         }
 
         /* Loading state animations */
@@ -1648,26 +1657,38 @@
             // Initialize skill bars animation
             animateSkillBars();
 
-            // --- Counter Animation ---
+            // --- Enhanced Counter Animation ---
             function animateCounters() {
                 const counters = document.querySelectorAll('.count-up');
+                
+                // Ensure counters are visible first
+                counters.forEach(counter => {
+                    counter.style.opacity = '1';
+                    counter.style.visibility = 'visible';
+                });
+                
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             const counter = entry.target;
+                            
+                            // Skip if already animated
+                            if (counter.dataset.animated === 'true') return;
+                            counter.dataset.animated = 'true';
+                            
                             const target = parseFloat(counter.getAttribute('data-target'));
                             let current = 0;
-                            const increment = target / 50;
+                            const increment = target / 60; // Slower animation
                             const isDecimal = target % 1 !== 0;
                             
                             const updateCounter = () => {
                                 if (current < target) {
                                     current += increment;
                                     if (current > target) current = target;
-                                    counter.textContent = isDecimal ? current.toFixed(2) : Math.floor(current);
+                                    counter.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
                                     requestAnimationFrame(updateCounter);
                                 } else {
-                                    counter.textContent = isDecimal ? target.toFixed(2) : target;
+                                    counter.textContent = isDecimal ? target.toFixed(1) : target;
                                 }
                             };
                             
@@ -1675,24 +1696,44 @@
                             observer.unobserve(counter);
                         }
                     });
-                }, { threshold: 0.5 });
+                }, { 
+                    threshold: 0.1, // Lower threshold for better detection
+                    rootMargin: '50px' // Trigger earlier
+                });
 
-                counters.forEach(counter => observer.observe(counter));
+                counters.forEach(counter => {
+                    observer.observe(counter);
+                });
             }
 
             // Initialize counter animation
             animateCounters();
 
-            // Fallback: Show counter values immediately if animation fails
+            // Immediate fallback: Show counter values after 2 seconds
             setTimeout(() => {
                 const counters = document.querySelectorAll('.count-up');
                 counters.forEach(counter => {
                     if (counter.textContent === '0' || counter.textContent === '') {
                         const target = counter.getAttribute('data-target');
                         counter.textContent = target;
+                        counter.style.opacity = '1';
+                        counter.style.visibility = 'visible';
                     }
                 });
-            }, 3000);
+            }, 2000);
+
+            // Force show counters on page load (immediate fallback)
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const counters = document.querySelectorAll('.count-up');
+                    counters.forEach(counter => {
+                        if (counter.textContent === '0' || counter.textContent === '') {
+                            const target = counter.getAttribute('data-target');
+                            counter.textContent = target;
+                        }
+                    });
+                }, 1000);
+            });
 
             // --- Matrix Background ---
             const canvas = document.getElementById('matrix-bg');
@@ -1754,6 +1795,28 @@
     <!-- Enhanced Animation Controller -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize counters immediately (no waiting)
+            const initializeCounters = () => {
+                const counters = document.querySelectorAll('.count-up');
+                console.log('Found counters:', counters.length);
+                
+                counters.forEach(counter => {
+                    const target = counter.getAttribute('data-target');
+                    console.log('Counter target:', target);
+                    
+                    // Make sure counter is visible
+                    counter.style.opacity = '1';
+                    counter.style.visibility = 'visible';
+                    counter.style.display = 'inline-block';
+                    
+                    // Set the value immediately as fallback
+                    counter.textContent = target;
+                });
+            };
+
+            // Initialize counters right away
+            initializeCounters();
+
             // Ensure home section is immediately visible
             const homeSection = document.getElementById('home');
             if (homeSection) {
